@@ -6,9 +6,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserValidator {
 
-    public Long validatePhoneNumber(Long phoneNumber){
+    public String validatePhoneNumber(String phoneNumber){
         //Validation
         //Ushawnini
+        //covert to Long and check length and again convert to string and send back
 
         return phoneNumber;
     }
