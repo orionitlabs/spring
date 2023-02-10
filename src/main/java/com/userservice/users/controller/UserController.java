@@ -22,15 +22,21 @@ public class UserController {
         log.info("FirstName: {}, LastName: {}", userVO.getFirstName(), userVO.getLastName());
         return userService.addNewUser(userVO);
     }
-
     @PostMapping(path = "/add/users", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<UserVO> addNewUsers(@RequestBody List<UserVO> userVO){
         return userService.addNewUsers(userVO);
     }
-
     @GetMapping(path = "/get/user", produces = MediaType.APPLICATION_JSON_VALUE)
     public UserVO getSingleUser(@RequestParam(required = true, defaultValue = "") String email){
         return userService.getUser(email);
+    }
+    @PutMapping(path = "/update", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public UserVO updateUser(@RequestBody UserVO userVO){
+        return userService.updateUserDetails(userVO);
+    }
+    @DeleteMapping(path = "/delete", produces = MediaType.APPLICATION_JSON_VALUE)
+    public UserVO deleteUser(@RequestParam(required = true, defaultValue = "") String email){
+        return userService.deleteUser(email);
     }
 
 }
