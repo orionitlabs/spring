@@ -3,6 +3,10 @@ package com.userservice.users.validator;
 import org.springframework.data.mongodb.core.aggregation.ArrayOperators;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 @Component
 public class UserValidator {
 
@@ -23,6 +27,17 @@ public class UserValidator {
     public String validateState(String state){
         //Validation
         //Harsha
-        return state;
+        if (state != null) {
+            List<String> states = new ArrayList<>();
+            Collections.addAll(states, "AL", "AK", "AS", "AZ", "AR", "CA", "CO", "CT", "DE", "DC", "FL", "GA",
+                    "GU", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT",
+                    "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "MP", "OH", "OK", "OR", "PA", "PR", "RI", "SC", "SD",
+                    "TN", "TX", "UT", "VT", "VA", "VI", "WA", "WV", "WI", "WY");
+            if (states.contains(state.toUpperCase()) == true)
+                return state;
+            else
+                throw new RuntimeException("Invalid Entry for State");
+        } else
+            throw new RuntimeException("Invalid Entry for State");
     }
 }
