@@ -14,7 +14,7 @@ public class UserValidator {
         //Validation
         //Ushawnini
         //covert to Long and check length and again convert to string and send back
-        if(phoneNumber != null &&phoneNumber.length() == 10){
+        if(phoneNumber != null && phoneNumber.length() == 10){
 
 
             try {
@@ -33,7 +33,7 @@ public class UserValidator {
     public Integer validateZip(Integer zip){
         //Validation
         //Pavan
-        if(String.valueOf(zip).length() == 5){
+        if(zip != null && String.valueOf(zip).length() == 5){
             return zip;
         }
         else{
