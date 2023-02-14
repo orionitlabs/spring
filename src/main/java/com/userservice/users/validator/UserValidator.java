@@ -17,7 +17,12 @@ public class UserValidator {
     public Integer validateZip(Integer zip){
         //Validation
         //Pavan
-        return zip;
+        if(zip != null && String.valueOf(zip).length() == 5){
+            return zip;
+        }
+        else{
+            throw new RuntimeException("Invalid zip code");
+        }
     }
 
     public String validateState(String state){
