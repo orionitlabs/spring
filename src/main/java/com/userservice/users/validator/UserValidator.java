@@ -10,8 +10,22 @@ public class UserValidator {
         //Validation
         //Ushawnini
         //covert to Long and check length and again convert to string and send back
+        if(phoneNumber != null &&phoneNumber.length() == 10){
 
-        return phoneNumber;
+
+            try {
+                Long.parseLong(phoneNumber);
+            } catch (NumberFormatException nfe) {
+                throw new RuntimeException("invalid Phone Number");
+
+            }
+            return phoneNumber;
+        }
+        else{
+            throw new RuntimeException("invalid Phone Number");
+        }
+
+
     }
 
     public Integer validateZip(Integer zip){
@@ -26,3 +40,4 @@ public class UserValidator {
         return state;
     }
 }
+

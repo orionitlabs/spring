@@ -4,17 +4,20 @@ import com.userservice.users.entity.AddressEntity;
 import com.userservice.users.entity.UserEntity;
 import com.userservice.users.model.AddressVO;
 import com.userservice.users.model.UserVO;
+import com.userservice.users.validator.UserValidator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class UserTransformer {
-
+    @Autowired
+    UserValidator userValidator;
     public UserEntity toEntity(UserVO userVO){
         return UserEntity.builder()
                 .firstName(userVO.getFirstName())
                 .lastName(userVO.getLastName())
                 .email(userVO.getEmail())
-                .phoneNumber(userVO.getPhoneNumber())
+                .phoneNumber(userValidator.validatePhoneNumber(userVO.getPhoneNumber()))
                 .address1(AddressEntity.builder()
                         .streetName(userVO.getAddress1().getStreetName())
                         .aptNo(userVO.getAddress1().getAptNo())
