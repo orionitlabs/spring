@@ -37,31 +37,36 @@ public class StudentService {
         }
     }
 
-    public List<StudentVO> getStudentByDeptAndYear(String studentDepartment, Integer studentYear){
-        Optional<StudentEntity> studentByDept = studentRepository.findByStudentDepartment(studentDepartment);
-        if(studentByDept.isPresent()){
-            Optional<StudentEntity> studentByYear = studentRepository.findByStudentYear(studentYear);
-            if(studentByYear.isPresent()) {
-                students.add(studentTransformer.fromStudentEntity(studentByYear.get()));
-                return students;
-            }
-            else {
-                throw new RuntimeException("Students not present");
-            }
-        }
-        else {
-            throw new RuntimeException("Students not present");
-        }
-    }
-
 //    public List<StudentVO> getStudentByDeptAndYear(String studentDepartment, Integer studentYear){
-//        Optional<StudentEntity> student = studentRepository.findByStudentDepartmentAndStudentYear(studentDepartment, studentYear);
-//        if(student.isPresent()){
-//                students.add(studentTransformer.fromStudentEntity(student.get()));
+//        Optional<StudentEntity> studentByDept = studentRepository.findByStudentDepartment(studentDepartment);
+//        if(studentByDept.isPresent()){
+//            Optional<StudentEntity> studentByYear = studentRepository.findByStudentYear(studentYear);
+//            if(studentByYear.isPresent()) {
+//                students.add(studentTransformer.fromStudentEntity(studentByYear.get()));
 //                return students;
+//            }
+//            else {
+//                throw new RuntimeException("Students not present");
+//            }
 //        }
 //        else {
 //            throw new RuntimeException("Students not present");
 //        }
 //    }
+
+    public List<StudentVO> getStudentByDeptAndYear(String studentDepartment, Integer studentYear){
+//        Optional<StudentEntity> student = studentRepository.findByStudentDepartmentAndStudentYear(studentDepartment, studentYear);
+        Iterable<StudentEntity> student = studentRepository.findAllByStudentDepartmentAndStudentYear(studentDepartment, studentYear);
+//        if(!student.isEmpty()){
+//            students.add(studentTransformer.fromStudentEntity(student.get()));
+//            return students;
+//        }
+//        else {
+//            throw new RuntimeException("Students not present");
+//        }
+        for(StudentEntity studentEntity : student){
+            students.add(studentTransformer.fromStudentEntity(studentEntity));
+        }
+        return students;
+    }
 }

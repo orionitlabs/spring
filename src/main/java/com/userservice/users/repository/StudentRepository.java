@@ -9,12 +9,13 @@ import java.util.Optional;
 
 @Repository
 public interface StudentRepository extends CrudRepository<StudentEntity, ObjectId> {
-    Optional<StudentEntity> findByStudentDepartment(String studentDepartment);
-
-    Optional<StudentEntity> findByStudentYear(Integer studentYear);
+//    Optional<StudentEntity> findByStudentDepartment(String studentDepartment);
+//
+//    Optional<StudentEntity> findByStudentYear(Integer studentYear);
 
     Optional<StudentEntity> findByStudentId(String studentId);
 
-//    Optional<StudentEntity> findByStudentDepartmentAndStudentYear(String studentDepartment, Integer studentYear);
+    Optional<StudentEntity> findByStudentDepartmentAndStudentYear(String studentDepartment, Integer studentYear);
 
+    Iterable<StudentEntity> findAllByStudentDepartmentAndStudentYear(String studentDepartment, Integer studentYear);
 }
