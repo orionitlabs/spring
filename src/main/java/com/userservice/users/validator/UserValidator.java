@@ -13,7 +13,6 @@ public class UserValidator {
 
         return phoneNumber;
     }
-
     public Integer validateZip(Integer zip){
         //Validation
         //Pavan
