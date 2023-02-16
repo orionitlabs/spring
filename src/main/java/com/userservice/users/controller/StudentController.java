@@ -14,18 +14,18 @@ public class StudentController {
     @Autowired
     StudentService studentService;
 
-    @PostMapping(path = "/addStudent", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path = "/add-student", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public StudentVO addNewStudent(@RequestBody StudentVO studentVO){
         return studentService.addNewStudent(studentVO);
     }
 
-    @GetMapping(path = "/getStudentById", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path = "/get-student-by-id", produces = MediaType.APPLICATION_JSON_VALUE)
     public StudentVO getStudentById(@RequestParam(required = true, defaultValue = "") String studentId){
         return studentService.getStudentById(studentId);
     }
 
-    @GetMapping(path = "/getStudentByDeptAndYear", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<StudentVO> getStudentByDeptAndYear(@RequestParam(required = true, defaultValue = "") String studentDepartment, String studentYear){
+    @GetMapping(path = "/get-student-by-deptandyear", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<StudentVO> getStudentByDeptAndYear(@RequestParam(required = true, defaultValue = "") String studentDepartment, Integer studentYear){
         return studentService.getStudentByDeptAndYear(studentDepartment, studentYear);
     }
 }

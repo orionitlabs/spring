@@ -11,7 +11,10 @@ import java.util.Optional;
 public interface StudentRepository extends CrudRepository<StudentEntity, ObjectId> {
     Optional<StudentEntity> findByStudentDepartment(String studentDepartment);
 
-    Optional<StudentEntity> findByStudentYear(String studentYear);
+    Optional<StudentEntity> findByStudentYear(Integer studentYear);
 
     Optional<StudentEntity> findByStudentId(String studentId);
+
+//    Optional<StudentEntity> findByStudentDepartmentAndStudentYear(String studentDepartment, Integer studentYear);
+
 }

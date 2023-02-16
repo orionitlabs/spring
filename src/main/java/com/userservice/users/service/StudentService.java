@@ -8,6 +8,7 @@ import com.userservice.users.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,12 +23,21 @@ public class StudentService {
     @Autowired
     StudentTransformer studentTransformer;
 
-    @Autowired
-    List<StudentVO> students;
+    List<StudentVO> students = new ArrayList<StudentVO>();
     public StudentVO addNewStudent(StudentVO studentVO){
         return studentTransformer.fromStudentEntity(studentRepository.save(studentTransformer.toStudentEntity(studentVO)));
     }
-    public List<StudentVO> getStudentByDeptAndYear(String studentDepartment, String studentYear){
+
+    public StudentVO getStudentById(String studentId){
+        Optional<StudentEntity> student = studentRepository.findByStudentId(studentId);
+        if(student.isPresent()){
+            return studentTransformer.fromStudentEntity(student.get());
+        }else{
+            throw new RuntimeException("Student not present");
+        }
+    }
+
+    public List<StudentVO> getStudentByDeptAndYear(String studentDepartment, Integer studentYear){
         Optional<StudentEntity> studentByDept = studentRepository.findByStudentDepartment(studentDepartment);
         if(studentByDept.isPresent()){
             Optional<StudentEntity> studentByYear = studentRepository.findByStudentYear(studentYear);
@@ -44,12 +54,14 @@ public class StudentService {
         }
     }
 
-    public StudentVO getStudentById(String studentId){
-        Optional<StudentEntity> student = studentRepository.findByStudentId(studentId);
-        if(student.isPresent()){
-            return studentTransformer.fromStudentEntity(student.get());
-        }else{
-            throw new RuntimeException("Student not present");
-        }
-    }
+//    public List<StudentVO> getStudentByDeptAndYear(String studentDepartment, Integer studentYear){
+//        Optional<StudentEntity> student = studentRepository.findByStudentDepartmentAndStudentYear(studentDepartment, studentYear);
+//        if(student.isPresent()){
+//                students.add(studentTransformer.fromStudentEntity(student.get()));
+//                return students;
+//        }
+//        else {
+//            throw new RuntimeException("Students not present");
+//        }
+//    }
 }
