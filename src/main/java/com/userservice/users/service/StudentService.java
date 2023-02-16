@@ -8,9 +8,9 @@ import com.userservice.users.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class StudentService {
@@ -23,7 +23,6 @@ public class StudentService {
     @Autowired
     StudentTransformer studentTransformer;
 
-    List<StudentVO> students = new ArrayList<StudentVO>();
     public StudentVO addNewStudent(StudentVO studentVO){
         return studentTransformer.fromStudentEntity(studentRepository.save(studentTransformer.toStudentEntity(studentVO)));
     }
@@ -37,36 +36,13 @@ public class StudentService {
         }
     }
 
-//    public List<StudentVO> getStudentByDeptAndYear(String studentDepartment, Integer studentYear){
-//        Optional<StudentEntity> studentByDept = studentRepository.findByStudentDepartment(studentDepartment);
-//        if(studentByDept.isPresent()){
-//            Optional<StudentEntity> studentByYear = studentRepository.findByStudentYear(studentYear);
-//            if(studentByYear.isPresent()) {
-//                students.add(studentTransformer.fromStudentEntity(studentByYear.get()));
-//                return students;
-//            }
-//            else {
-//                throw new RuntimeException("Students not present");
-//            }
-//        }
-//        else {
-//            throw new RuntimeException("Students not present");
-//        }
-//    }
-
     public List<StudentVO> getStudentByDeptAndYear(String studentDepartment, Integer studentYear){
-//        Optional<StudentEntity> student = studentRepository.findByStudentDepartmentAndStudentYear(studentDepartment, studentYear);
-        Iterable<StudentEntity> student = studentRepository.findAllByStudentDepartmentAndStudentYear(studentDepartment, studentYear);
-//        if(!student.isEmpty()){
-//            students.add(studentTransformer.fromStudentEntity(student.get()));
-//            return students;
-//        }
-//        else {
-//            throw new RuntimeException("Students not present");
-//        }
-        for(StudentEntity studentEntity : student){
-            students.add(studentTransformer.fromStudentEntity(studentEntity));
+        List<StudentEntity> studentList = studentRepository.findAllByStudentDepartmentAndStudentYear(studentDepartment, studentYear);
+        if(!studentList.isEmpty()){
+            return studentList.stream().map(e->studentTransformer.fromStudentEntity(e)).collect(Collectors.toList());
         }
-        return students;
+        else {
+            throw new RuntimeException("Students not present");
+        }
     }
 }
