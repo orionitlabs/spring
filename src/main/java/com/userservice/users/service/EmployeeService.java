@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class EmployeeService {
@@ -22,25 +23,18 @@ public class EmployeeService {
     @Autowired
     EmployeeTransformer employeeTransformer;
 
-    List<EmployeeVO> employees;
     public EmployeeVO addNewEmployee(EmployeeVO employeeVO){
         return employeeTransformer.fromEmployeeEntity(employeeRepository.save(employeeTransformer.toEmployeeEntity(employeeVO)));
     }
-    public List<EmployeeVO> getEmployeeByDeptAndSalary(String employeeDepartment, String employeeSalary){
-        Optional<EmployeeEntity> employeeByDept = employeeRepository.findByEmployeeDepartment(employeeDepartment);
-        if(employeeByDept.isPresent()){
-            Optional<EmployeeEntity> employeeBySalary = employeeRepository.findByEmployeeSalary(employeeSalary);
-            if(employeeBySalary.isPresent()) {
-                employees.add(employeeTransformer.fromEmployeeEntity(employeeBySalary.get()));
-                return employees;
-            }
-            else {
-                throw new RuntimeException("Employees not present");
-            }
+    public List<EmployeeVO> getEmployeeByDeptAndSalary(String employeeDepartment, Integer employeeSalary){
+        List<EmployeeEntity> employeeList = employeeRepository.findAllByEmployeeDepartmentAndEmployeeSalary(employeeDepartment, employeeSalary);
+        if(!employeeList.isEmpty()) {
+            return employeeList.stream().map(e->employeeTransformer.fromEmployeeEntity(e)).collect(Collectors.toList());
         }
         else {
-            throw new RuntimeException("Employees not present");
+            throw new RuntimeException("Employees not working");
         }
+
     }
 
     public EmployeeVO getEmployeeById(String employeeId){
@@ -48,7 +42,7 @@ public class EmployeeService {
         if(employee.isPresent()){
             return employeeTransformer.fromEmployeeEntity(employee.get());
         }else{
-            throw new RuntimeException("Employee not present");
+            throw new RuntimeException("Employee not working");
         }
     }
 }
