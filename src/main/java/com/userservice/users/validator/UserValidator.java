@@ -29,7 +29,6 @@ public class UserValidator {
             throw new RuntimeException("invalid Phone Number");
         }
     }
-
     public Integer validateZip(Integer zip){
         //Validation
         //Pavan
