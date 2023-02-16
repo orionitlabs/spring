@@ -9,4 +9,8 @@ public class Utils {
     public  String createEmployeeId(){
         return UUID.randomUUID().toString();
     }
+
+    public String createCustomerUserName(String customerFirstName, String customerLastName) {
+        return customerFirstName+customerLastName.substring(0,5);
+    }
 }
